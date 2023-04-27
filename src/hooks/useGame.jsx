@@ -79,11 +79,12 @@ export default function useGame() {
 
   const handleClick = (card, index) => {
     setActualCard(card);
-    setIsChanging(true);
 
     if (cards[card]?.includes(index)) {
       return;
     }
+
+    setIsChanging(true);
 
     if (!cards[card] || cards[card].length === 0) {
       setCard(card, [index]);

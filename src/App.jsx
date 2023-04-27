@@ -74,7 +74,7 @@ function App() {
       </div>
       <div
         className={cn(
-          'grid grid-cols-auto-fill xl:grid-cols-6 gap-5 w-full overflow-auto relative',
+          'grid grid-cols-auto-fill xl:grid-cols-6 gap-5 w-full overflow-auto select-none relative',
           {
             'pointer-events-none': isChanging,
           }

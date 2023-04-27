@@ -46,6 +46,7 @@ export default function useGame() {
     setCards({});
     setActualCard(0);
     setIsVictory(false);
+    setCardList(createRandomNumbers(18, 2));
   };
 
   const changeUsername = (value) => {

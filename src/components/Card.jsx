@@ -23,7 +23,7 @@ export default function Card({ isForward, image, onClick, disabled, ...props }) 
             alt='forward'
             height={384}
             width={256}
-            className='w-[16rem] h-full object-cover rounded-lg aspect-ratio-[3/4]'
+            className='w-[16rem] h-full object-cover rounded-lg border-4 border-slate-100'
             initial={{
               rotateY: 180,
             }}
@@ -39,7 +39,7 @@ export default function Card({ isForward, image, onClick, disabled, ...props }) 
             src='/deck_2_large.png'
             height={384}
             width={256}
-            className='w-[16rem] h-full rounded-lg aspect-ratio-[3/4] object-fill'
+            className='w-full h-full rounded-lg object-cover border-4 border-slate-100'
             alt='backout'
             initial={{
               rotateY: 180,

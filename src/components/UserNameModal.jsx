@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Modal from './Modal';
 import { AnimatePresence } from 'framer-motion';
 
 export default function UserNameModal({ show, onSubmit }) {
+  const [username, setUsername] = useState('');
+
   return (
     <AnimatePresence>
       {show && (
@@ -22,10 +25,13 @@ export default function UserNameModal({ show, onSubmit }) {
                 placeholder='Enter your name'
                 name='username'
                 id='username'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <input
+                disabled={!username}
                 placeholder='Start'
-                className='text-2xl font-bold text-blue-500 hover:text-blue-600 hover:bg-slate-200 px-4 py-1 rounded-md cursor-pointer'
+                className='text-2xl font-bold text-blue-500 hover:text-blue-600 hover:bg-slate-200 px-4 py-1 rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                 type='submit'
                 value='Start'
               />

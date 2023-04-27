@@ -29,7 +29,7 @@ function App() {
   } = useGame();
 
   const [playMusic] = useSound('/sounds/Wholesome.mp3', {
-    volume: isMuted ? 0 : 0.3,
+    volume: isMuted ? 0 : 0.1,
     interrupt: false,
   });
 

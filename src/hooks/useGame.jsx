@@ -1,7 +1,9 @@
+import useSound from 'use-sound';
 import { useEffect, useState } from 'react';
 
 import { getAnimalsImages } from '../services/animals';
 import { createRandomNumbers } from '../utils/random';
+
 
 export default function useGame() {
   const [score, setScore] = useState({
@@ -10,10 +12,12 @@ export default function useGame() {
   });
   const [cards, setCards] = useState({});
   const [actualCard, setActualCard] = useState(0);
-  const [cardsSelected, setCardsSelected] = useState([]);
 
   const [cardList, setCardList] = useState([]);
   const [animals, setAnimals] = useState([]);
+
+  const [playError] = useSound('/sounds/error.mp3');
+  const [playSuccess] = useSound('/sounds/success.mp3');
 
   useEffect(() => {
     getAnimalsImages().then((response) => setAnimals(response));
@@ -33,7 +37,6 @@ export default function useGame() {
         erros: prev.erros + 1,
       }));
 
-      setCardsSelected([]);
       setActualCard(0);
     }, 1000);
   };
@@ -47,7 +50,6 @@ export default function useGame() {
 
   const handleClick = (card, index) => {
     setActualCard(card);
-    setCardsSelected((prev) => prev.concat(card));
 
     if (cards[card]?.includes(index)) {
       return;
@@ -62,12 +64,14 @@ export default function useGame() {
     }
 
     if (actualCard !== card) {
+      playError();
       setCard(card, [index]);
 
       clearCards(actualCard);
       return;
     }
 
+    playSuccess();
     setScore((prev) => ({
       ...prev,
       points: prev.points + 1,
@@ -75,7 +79,6 @@ export default function useGame() {
 
     setCard(card, [...cards[card], index]);
     setActualCard(0);
-    setCardsSelected([]);
   };
 
   return {
@@ -83,7 +86,6 @@ export default function useGame() {
     cardList,
     animals,
     score,
-    cardsSelected,
     onClickCard: handleClick,
   };
 }

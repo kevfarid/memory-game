@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Card({ isForward, image, onClick, ...props }) {
   const handleClick = () => {
@@ -14,23 +15,40 @@ export default function Card({ isForward, image, onClick, ...props }) {
       onClick={handleClick}
       {...props}
     >
-      {isForward ? (
-        <img
-          src={image}
-          alt='forward'
-          height={384}
-          width={256}
-          className='w-[16rem] h-full object-cover rounded-lg'
-        />
-      ) : (
-        <img
-          src='/deck_2_large.png'
-          height={384}
-          width={256}
-          className='w-[16rem] h-full rounded-lg object-cover'
-          alt='backout'
-        />
-      )}
+      <AnimatePresence>
+        {isForward && (
+          <motion.img
+            src={image}
+            alt='forward'
+            height={384}
+            width={256}
+            className='w-[16rem] h-full object-cover rounded-lg'
+            initial={{
+              rotateY: 180,
+            }}
+            animate={{
+              rotateY: 0,
+            }}
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {!isForward && (
+          <motion.img
+            src='/deck_2_large.png'
+            height={384}
+            width={256}
+            className='w-[16rem] h-full rounded-lg object-cover'
+            alt='backout'
+            initial={{
+              rotateY: 180,
+            }}
+            animate={{
+              rotateY: 0,
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

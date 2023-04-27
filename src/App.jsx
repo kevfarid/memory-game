@@ -1,34 +1,34 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+
+import Card from './components/Card';
+import { getAnimalsImages } from './services/animals';
+import { createRandomNumbers} from './utils/random';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [points, setPoints] = useState(0);
+  const [cardList, setCardList] = useState([]);
+  const [animals, setAnimals] = useState([]);
+
+  useEffect(() => {
+    getAnimalsImages().then((response) => setAnimals(response));
+    setCardList(createRandomNumbers(18, 2));
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href='https://vitejs.dev' target='_blank' rel='noreferrer'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank' rel='noreferrer'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
+    <main className='bg-red-400 w-full h-full flex flex-col justify-center items-center m-auto max-w-7xl'>
+      <span className='text-4xl font-bold text-white mb-5'>
+        Points: {points}
+      </span>
+      <div className='grid grid-cols-auto-fill xl:grid-cols-6 gap-5 w-full px-8'>
+        {cardList.map((card, index) => (
+          <Card
+            key={`card-${index}`}
+            image={animals[card - 1]}
+            onClick={() => setPoints((prev) => prev + 1)}
+          />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </main>
   );
 }
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Card({ isForward, image, onClick, ...props }) {
+export default function Card({ isForward, image, onClick, disabled, ...props }) {
   const handleClick = () => {
     onClick && onClick();
   };
@@ -11,6 +11,7 @@ export default function Card({ isForward, image, onClick, ...props }) {
     <div
       className={cn('h-full xl:h-72', {
         'cursor-pointer': onClick && !isForward,
+        'opacity-60': disabled,
       })}
       onClick={handleClick}
       {...props}
@@ -62,4 +63,5 @@ Card.propTypes = {
   isForward: PropTypes.bool,
   image: PropTypes.string,
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 };

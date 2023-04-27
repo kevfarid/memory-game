@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { getAnimalsImages } from '../services/animals';
 import { createRandomNumbers } from '../utils/random';
 
-
 export default function useGame() {
   const [score, setScore] = useState({
     points: 0,
@@ -12,18 +11,47 @@ export default function useGame() {
   });
   const [cards, setCards] = useState({});
   const [actualCard, setActualCard] = useState(0);
+  const [isVictory, setIsVictory] = useState(false);
+  const [isChanging, setIsChanging] = useState(false);
+  const [username, setUsername] = useState(
+    localStorage.getItem('username') || ''
+  );
 
   const [cardList, setCardList] = useState([]);
   const [animals, setAnimals] = useState([]);
 
   const [playError] = useSound('/sounds/error.mp3');
   const [playSuccess] = useSound('/sounds/success.mp3');
+  const [playVictory] = useSound('/sounds/win.mp3', {
+    volume: 0.3,
+  });
 
   useEffect(() => {
     getAnimalsImages().then((response) => setAnimals(response));
     setCardList(createRandomNumbers(18, 2));
-    setCards({});
   }, []);
+
+  useEffect(() => {
+    if (score.points === 9) {
+      setIsVictory(true);
+      playVictory();
+    }
+  }, [playVictory, score]);
+
+  const resetGame = () => {
+    setScore({
+      points: 0,
+      erros: 0,
+    });
+    setCards({});
+    setActualCard(0);
+    setIsVictory(false);
+  };
+
+  const changeUsername = (value) => {
+    setUsername(value);
+    localStorage.setItem('username', value);
+  };
 
   const clearCards = (actualCard) => {
     setTimeout(() => {
@@ -38,6 +66,7 @@ export default function useGame() {
       }));
 
       setActualCard(0);
+      setIsChanging(false);
     }, 1000);
   };
 
@@ -50,6 +79,7 @@ export default function useGame() {
 
   const handleClick = (card, index) => {
     setActualCard(card);
+    setIsChanging(true);
 
     if (cards[card]?.includes(index)) {
       return;
@@ -60,6 +90,7 @@ export default function useGame() {
     }
 
     if (actualCard === 0) {
+      setIsChanging(false);
       return;
     }
 
@@ -77,6 +108,7 @@ export default function useGame() {
       points: prev.points + 1,
     }));
 
+    setIsChanging(false);
     setCard(card, [...cards[card], index]);
     setActualCard(0);
   };
@@ -86,6 +118,11 @@ export default function useGame() {
     cardList,
     animals,
     score,
+    isVictory,
+    username,
+    setUsername: changeUsername,
     onClickCard: handleClick,
+    resetGame,
+    isChanging,
   };
 }

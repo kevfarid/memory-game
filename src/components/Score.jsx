@@ -19,7 +19,7 @@ export default function Score({ score, type, name }) {
   return (
     <div
       className={cn(
-        'text-gray-500 px-6 py-1 rounded-md shadow-inner inline-flex items-center gap-4',
+        'text-gray-500 px-6 py-1 rounded-md shadow-inner inline-flex items-center gap-4 max-h-10',
         'transition-colors duration-300 ease-in-out',
         {
           'bg-emerald-500': type === 'points' && showBgColor,

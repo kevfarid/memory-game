@@ -9,7 +9,7 @@ export default function Card({ isForward, image, onClick, disabled, ...props }) 
 
   return (
     <div
-      className={cn('h-full xl:h-72', {
+      className={cn('h-full', {
         'cursor-pointer': onClick && !isForward,
         'opacity-60': disabled,
       })}
@@ -23,7 +23,7 @@ export default function Card({ isForward, image, onClick, disabled, ...props }) 
             alt='forward'
             height={384}
             width={256}
-            className='w-[16rem] h-full object-cover rounded-lg'
+            className='w-[16rem] h-full object-cover rounded-lg aspect-ratio-[3/4]'
             initial={{
               rotateY: 180,
             }}
@@ -39,7 +39,7 @@ export default function Card({ isForward, image, onClick, disabled, ...props }) 
             src='/deck_2_large.png'
             height={384}
             width={256}
-            className='w-[16rem] h-full rounded-lg object-cover'
+            className='w-[16rem] h-full rounded-lg aspect-ratio-[3/4] object-fill'
             alt='backout'
             initial={{
               rotateY: 180,

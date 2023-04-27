@@ -46,14 +46,14 @@ function App() {
   };
 
   return (
-    <main className='w-full h-screen flex flex-col justify-center items-center m-auto max-w-7xl gap-4 xl:px-8 p-4'>
+    <main className='w-screen h-screen flex flex-col lg:justify-center items-center m-auto max-w-7xl gap-4 xl:px-8 p-4'>
       <CongratulationModal
         show={isVictory}
         username={username}
         onClick={resetGame}
       />
       <UserNameModal show={!username} onSubmit={handleSubmit} />
-      <div className='flex gap-2 w-full justify-between items-end'>
+      <div className='flex gap-2 w-full justify-center sm:justify-between items-end flex-wrap'>
         <img src='/icon.png' alt='logo' className='w-40' />
         <div className='flex gap-2 items-end'>
           <button
@@ -74,7 +74,7 @@ function App() {
       </div>
       <div
         className={cn(
-          'grid grid-cols-6 gap-5 w-full overflow-auto select-none relative',
+          'grid grid-cols-6 gap-5 w-full overflow-auto select-none relative grid-rows-auto-fill h-full',
           {
             'pointer-events-none': isChanging,
           }

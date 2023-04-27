@@ -1,16 +1,19 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import cn from 'classnames';
 
-export default function Card({ image, onClick }) {
-  const [isForward, setIsForward] = useState(false);
-
+export default function Card({ isForward, image, onClick, ...props }) {
   const handleClick = () => {
-    setIsForward(true);
     onClick && onClick();
   };
 
   return (
-    <div className='cursor-pointer xl:h-72' onClick={handleClick}>
+    <div
+      className={cn('h-full xl:h-72', {
+        'cursor-pointer': onClick && !isForward,
+      })}
+      onClick={handleClick}
+      {...props}
+    >
       {isForward ? (
         <img
           src={image}
@@ -24,7 +27,7 @@ export default function Card({ image, onClick }) {
           src='/deck_2_large.png'
           height={384}
           width={256}
-          className='w-[16rem] h-full rounded-lg'
+          className='w-[16rem] h-full rounded-lg object-cover'
           alt='backout'
         />
       )}
